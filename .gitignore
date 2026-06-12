@@ -1,0 +1,26 @@
+# Maven
+target/
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# IDEs and editors
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+
+# Environment and secrets
+.env
+.env.local
+.env.*
+
+# Local data & temp directory
+data/
+active_job/
+*.log
