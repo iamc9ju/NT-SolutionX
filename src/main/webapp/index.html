@@ -185,6 +185,35 @@
                     </span>
                 </button>
 
+                <!-- Collapsible Master Number Section -->
+                <div class="pt-4 border-t border-neutral-100 dark:border-neutral-900 mt-4">
+                    <button @click="masterExpanded = !masterExpanded"
+                        class="w-full flex items-center justify-between px-3 py-1.5 text-[9px] font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest hover:text-charcoal-900 dark:hover:text-white transition-all select-none">
+                        <span>Master Number</span>
+                        <i class="fa-solid fa-chevron-down text-[8px] transition-transform duration-200" :class="masterExpanded ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div v-show="masterExpanded" class="mt-1.5 space-y-0.5">
+                        <button @click="activeTab = 'master-list'; sidebarOpen = false"
+                            class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all"
+                            :class="activeTab === 'master-list' ? 'bg-neutral-100 dark:bg-neutral-800 text-charcoal-900 dark:text-white shadow-sm' : 'text-neutral-500 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-800/40'">
+                            <i class="fa-solid fa-database w-4 text-center text-[13px]"></i>
+                            <span>Master Number List</span>
+                        </button>
+                        <button @click="activeTab = 'master-sync'; sidebarOpen = false"
+                            class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all relative"
+                            :class="activeTab === 'master-sync' ? 'bg-neutral-100 dark:bg-neutral-800 text-charcoal-900 dark:text-white shadow-sm' : 'text-neutral-500 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-800/40'">
+                            <i class="fa-solid fa-arrows-rotate w-4 text-center text-[13px]"></i>
+                            <span>Sync Status</span>
+                        </button>
+                        <button @click="activeTab = 'master-config'; sidebarOpen = false"
+                            class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all"
+                            :class="activeTab === 'master-config' ? 'bg-neutral-100 dark:bg-neutral-800 text-charcoal-900 dark:text-white shadow-sm' : 'text-neutral-500 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-800/40'">
+                            <i class="fa-solid fa-sliders w-4 text-center text-[13px]"></i>
+                            <span>Configurations</span>
+                        </button>
+                    </div>
+                </div>
+
                 <!-- Collapsible Systems Section (NavCollapsible) -->
                 <div class="pt-4 border-t border-neutral-100 dark:border-neutral-900 mt-4">
                     <button @click="systemsExpanded = !systemsExpanded"
@@ -668,6 +697,194 @@
                     </div>
                 </div>
 
+                <!-- Tab: Master Number List -->
+                <div v-show="activeTab === 'master-list'" class="space-y-6 fade-in animate-fadeIn">
+                    <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 shadow-soft dark:shadow-none space-y-6">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-4 border-b border-neutral-100 dark:border-neutral-800">
+                            <div>
+                                <h3 class="text-sm font-bold text-neutral-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                                    <i class="fa-solid fa-database text-neutral-400"></i>
+                                    ระบบบริหารจัดการเลขหมายหลัก (Master Number)
+                                </h3>
+                                <p class="text-xs text-neutral-500 mt-0.5">แสดงรายการข้อมูลเบอร์โทรศัพท์ที่เป็นข้อมูลหลักของบริษัทและสถานะการซิงก์ระบบ</p>
+                            </div>
+                        </div>
+
+                        <!-- Filters -->
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <!-- Search -->
+                            <div class="relative w-full sm:w-64">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-neutral-400 dark:text-neutral-500">
+                                    <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                                </span>
+                                <input type="text" v-model="masterSearchQuery" placeholder="ค้นหาเบอร์หลัก..."
+                                    class="pl-9 pr-3 py-2 w-full rounded-xl border border-neutral-200 dark:border-neutral-800 text-xs focus:ring-1 focus:ring-black dark:focus:ring-white focus:border-black dark:focus:border-white bg-white dark:bg-[#0c0a09] text-charcoal-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-505 transition-all shadow-sm">
+                            </div>
+
+                            <!-- Filter Status -->
+                            <div class="flex items-center gap-2 self-end sm:self-auto">
+                                <span class="text-xs font-semibold text-neutral-500">สถานะ:</span>
+                                <select v-model="masterFilterStatus" class="px-3 py-1.5 rounded-xl border border-neutral-200 dark:border-neutral-800 text-xs bg-white dark:bg-neutral-950 text-neutral-700 dark:text-neutral-300 focus:outline-none shadow-sm">
+                                    <option value="all">ทั้งหมด</option>
+                                    <option value="ACTIVE">ACTIVE (ใช้งานอยู่)</option>
+                                    <option value="AVAILABLE">AVAILABLE (เบอร์ว่าง)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Data Grid -->
+                        <div class="overflow-x-auto border border-neutral-200 dark:border-neutral-800 rounded-xl shadow-sm">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-neutral-400 dark:text-neutral-500">
+                                        <th class="p-4 font-bold uppercase">หมายเลข (MSISDN)</th>
+                                        <th class="p-4 font-bold uppercase">ประเภทซิม</th>
+                                        <th class="p-4 font-bold uppercase">แหล่งข้อมูล</th>
+                                        <th class="p-4 font-bold uppercase">สถานะหลัก</th>
+                                        <th class="p-4 font-bold uppercase">การอัปเดตล่าสุด</th>
+                                        <th class="p-4 font-bold uppercase text-center">การจัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="num in filteredMasterNumbers" :key="num.phoneNumber" class="border-b border-neutral-100 dark:border-neutral-850 hover:bg-neutral-50/50 dark:hover:bg-neutral-850/20 text-charcoal-900 dark:text-neutral-205 transition-all">
+                                        <td class="p-4 font-mono font-bold">{{ num.phoneNumber }}</td>
+                                        <td class="p-4">
+                                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold" :class="num.category === 'Prepaid' ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/50' : 'bg-orange-50 dark:bg-orange-950/40 text-orange-600 dark:text-orange-400 border border-orange-100 dark:border-orange-900/50'">
+                                                {{ num.category }}
+                                            </span>
+                                        </td>
+                                        <td class="p-4">{{ num.source }}</td>
+                                        <td class="p-4">
+                                            <span class="inline-flex items-center gap-1.5 font-bold" :class="num.status === 'ACTIVE' ? 'text-neutral-400 dark:text-neutral-550' : 'text-emerald-600 dark:text-emerald-400'">
+                                                <span class="w-1.5 h-1.5 rounded-full" :class="num.status === 'ACTIVE' ? 'bg-neutral-300 dark:bg-neutral-550' : 'bg-emerald-550'"></span>
+                                                {{ num.status }}
+                                            </span>
+                                        </td>
+                                        <td class="p-4 font-mono text-[11px]">{{ num.lastSync }}</td>
+                                        <td class="p-4 text-center">
+                                            <button class="px-2.5 py-1 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-[11px] font-bold shadow-sm transition-all" @click="alert('กำลังเปิดดูรายละเอียดเบอร์หลัก ' + num.phoneNumber)">
+                                                ตรวจสอบเชิงลึก
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr v-if="filteredMasterNumbers.length === 0">
+                                        <td colspan="6" class="p-8 text-center text-neutral-450 dark:text-neutral-500 font-medium">ไม่พบข้อมูลตามเงื่อนไขที่ระบุ</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Master Number Sync Status -->
+                <div v-show="activeTab === 'master-sync'" class="space-y-6 fade-in max-w-4xl mx-auto">
+                    <!-- Statistics Row -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-5 shadow-soft dark:shadow-none flex items-center justify-between">
+                            <div>
+                                <dt class="text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-wider">เบอร์ในฐานข้อมูลหลัก</dt>
+                                <dd class="text-xl font-bold text-charcoal-900 dark:text-white mt-1 font-mono">14,520</dd>
+                            </div>
+                            <div class="bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 w-8 h-8 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-server text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-5 shadow-soft dark:shadow-none flex items-center justify-between">
+                            <div>
+                                <dt class="text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-wider">ซิงโครไนซ์สำเร็จ</dt>
+                                <dd class="text-xl font-bold text-emerald-600 dark:text-emerald-400 mt-1 font-mono">14,510</dd>
+                            </div>
+                            <div class="bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 w-8 h-8 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-circle-check text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-5 shadow-soft dark:shadow-none flex items-center justify-between">
+                            <div>
+                                <dt class="text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-wider">ข้อมูลขัดแย้ง/พบปัญหา</dt>
+                                <dd class="text-xl font-bold text-red-500 mt-1 font-mono">10</dd>
+                            </div>
+                            <div class="bg-red-50 dark:bg-red-950/20 text-red-650 dark:text-red-400 w-8 h-8 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-triangle-exclamation text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sync Action Box -->
+                    <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 shadow-soft dark:shadow-none space-y-4">
+                        <h2 class="text-sm font-bold text-neutral-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-rotate text-emerald-500 text-sm"></i>
+                            สถานะการซิงก์ข้อมูล (Auto-Sync & Reconciliation)
+                        </h2>
+                        <div class="border border-neutral-200 dark:border-neutral-800 rounded-xl p-5 bg-neutral-50/20 dark:bg-[#0c0a09]/30 space-y-3">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="font-bold text-neutral-550">สถานะระบบซิงโครไนซ์:</span>
+                                <span class="inline-flex items-center gap-1.5 font-bold text-emerald-600 dark:text-emerald-400">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-550 animate-ping"></span>
+                                    <span>ONLINE (เชื่อมต่อปกติ)</span>
+                                </span>
+                            </div>
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="font-bold text-neutral-550">ประมวลผลระบบล่าสุดเมื่อ:</span>
+                                <span class="font-mono text-neutral-800 dark:text-neutral-200">{{ syncStats.lastSyncRun }}</span>
+                            </div>
+                        </div>
+
+                        <button @click="runManualSync" :disabled="syncStats.isSyncing"
+                            class="w-full py-3.5 px-4 rounded-xl font-bold text-xs uppercase tracking-wider text-center transition-all flex items-center justify-center gap-2 cursor-pointer bg-black dark:bg-neutral-100 hover:bg-neutral-900 dark:hover:bg-white text-white dark:text-neutral-950 shadow-soft dark:shadow-none disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fa-solid fa-arrows-rotate" :class="syncStats.isSyncing ? 'animate-spin' : ''"></i>
+                            {{ syncStats.isSyncing ? 'กำลังประมวลผลซิงค์ข้อมูล...' : 'รันระบบซิงค์แมนนวลทันที (Sync Now)' }}
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab: Master Number Configuration -->
+                <div v-show="activeTab === 'master-config'" class="space-y-6 fade-in max-w-2xl mx-auto">
+                    <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 shadow-soft dark:shadow-none space-y-6">
+                        <div class="flex items-center gap-2 pb-4 border-b border-neutral-100 dark:border-neutral-800">
+                            <i class="fa-solid fa-sliders text-neutral-450"></i>
+                            <h3 class="text-sm font-bold text-neutral-900 dark:text-white uppercase tracking-wider">
+                                ตั้งค่าการควบคุมข้อมูลหลัก
+                            </h3>
+                        </div>
+
+                        <!-- Settings Fields -->
+                        <div class="space-y-4 text-xs">
+                            <div class="flex flex-col gap-1.5">
+                                <label class="font-bold text-neutral-700 dark:text-neutral-300">ความถี่ในการอัปเดตระบบอัตโนมัติ (Reconciliation Interval)</label>
+                                <select v-model="configSettings.syncInterval" class="px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-neutral-700 dark:text-neutral-300 focus:outline-none w-full">
+                                    <option value="hourly">ทุกชั่วโมง (Hourly)</option>
+                                    <option value="daily">ทุกเที่ยงคืน (Daily at 00:00)</option>
+                                    <option value="weekly">ทุกสัปดาห์ (Weekly)</option>
+                                </select>
+                            </div>
+
+                            <div class="flex flex-col gap-1.5">
+                                <label class="font-bold text-neutral-700 dark:text-neutral-300">ขนาดจำกัดข้อมูลการซิงก์ข้อมูลต่อรอบ (Batch Size Limit)</label>
+                                <input type="number" v-model="configSettings.batchSize" class="px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-neutral-700 dark:text-neutral-300 focus:outline-none w-full">
+                            </div>
+
+                            <div class="flex items-center justify-between p-3 border border-neutral-100 dark:border-neutral-800 rounded-xl">
+                                <div>
+                                    <p class="font-bold text-neutral-700 dark:text-neutral-300">ซ่อมแซมข้อมูลอัตโนมัติเมื่อพบความไม่เสถียร (Auto Repair & Alignment)</p>
+                                    <p class="text-[10px] text-neutral-400 dark:text-neutral-505 mt-0.5">เมื่อเช็คพบความขัดแย้งในระบบ Billing ให้รันขั้นตอนแก้ปัญหาและใส่ suffix ทันที</p>
+                                </div>
+                                <input type="checkbox" v-model="configSettings.autoRepair" class="w-4 h-4 accent-black dark:accent-neutral-200">
+                            </div>
+
+                            <div class="flex flex-col gap-1.5">
+                                <label class="font-bold text-neutral-700 dark:text-neutral-300">อีเมลแจ้งเตือนเมื่อระบบมีปัญหา (Alert Notifications)</label>
+                                <input type="email" v-model="configSettings.notifyEmail" class="px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-neutral-700 dark:text-neutral-300 focus:outline-none w-full">
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end pt-4 border-t border-neutral-100 dark:border-neutral-800">
+                            <button @click="alert('บันทึกการตั้งค่าข้อมูลหลักเรียบร้อยแล้ว')" class="px-4 py-2 bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-950 rounded-xl font-bold shadow-sm transition-all cursor-pointer">
+                                บันทึกการตั้งค่า
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
             </div> <!-- Close Inset Body Content Container -->
         </div> <!-- Close Main Inset Container -->
 
@@ -1042,6 +1259,56 @@
                 const activeTab = ref('dashboard');
                 const sidebarOpen = ref(false);
                 const systemsExpanded = ref(true);
+                const masterExpanded = ref(true);
+
+                // Master Number Management state & mock data
+                const masterNumbers = ref([
+                    { phoneNumber: '0819005522', category: 'Prepaid', source: 'Oracle DB', status: 'ACTIVE', lastSync: '2026-06-12 12:45:10' },
+                    { phoneNumber: '0819005523', category: 'Postpaid', source: 'Oracle DB', status: 'AVAILABLE', lastSync: '2026-06-12 12:45:10' },
+                    { phoneNumber: '0819005524', category: 'Prepaid', source: 'Oracle DB', status: 'ACTIVE', lastSync: '2026-06-12 12:45:10' },
+                    { phoneNumber: '0819005525', category: 'Prepaid', source: 'Oracle DB', status: 'AVAILABLE', lastSync: '2026-06-12 12:45:10' },
+                    { phoneNumber: '0819005526', category: 'Postpaid', source: 'Oracle DB', status: 'ACTIVE', lastSync: '2026-06-12 12:45:10' },
+                    { phoneNumber: '0819005527', category: 'Prepaid', source: 'Oracle DB', status: 'AVAILABLE', lastSync: '2026-06-12 12:45:10' },
+                    { phoneNumber: '0819005528', category: 'Prepaid', source: 'Oracle DB', status: 'ACTIVE', lastSync: '2026-06-12 12:45:10' }
+                ]);
+                const masterSearchQuery = ref('');
+                const masterFilterStatus = ref('all');
+
+                const filteredMasterNumbers = computed(() => {
+                    let list = masterNumbers.value;
+                    if (masterFilterStatus.value !== 'all') {
+                        list = list.filter(num => num.status === masterFilterStatus.value);
+                    }
+                    if (masterSearchQuery.value) {
+                        const q = masterSearchQuery.value.trim().toLowerCase();
+                        list = list.filter(num => num.phoneNumber.toLowerCase().includes(q));
+                    }
+                    return list;
+                });
+
+                const syncStats = ref({
+                    totalMaster: 14520,
+                    syncedCount: 14510,
+                    errorCount: 10,
+                    lastSyncRun: '2026-06-12 12:45:10',
+                    isSyncing: false
+                });
+
+                const runManualSync = () => {
+                    syncStats.value.isSyncing = true;
+                    setTimeout(() => {
+                        syncStats.value.isSyncing = false;
+                        syncStats.value.lastSyncRun = new Date().toLocaleString('th-TH');
+                        alert('ซิงโครไนซ์ข้อมูลระบบ Master Number กับระบบปลายทางเสร็จสมบูรณ์!');
+                    }, 3000);
+                };
+
+                const configSettings = ref({
+                    syncInterval: 'daily',
+                    batchSize: 500,
+                    autoRepair: true,
+                    notifyEmail: 'intranet-admin@ntsolutionx.co.th'
+                });
                 const showInfoModal = ref(false);
                 const isCommandDialogOpen = ref(false);
                 const commandSearchQuery = ref('');
@@ -1673,6 +1940,14 @@
                     resultsPreview,
                     systemHeaders,
                     systems,
+                    masterExpanded,
+                    masterNumbers,
+                    masterSearchQuery,
+                    masterFilterStatus,
+                    filteredMasterNumbers,
+                    syncStats,
+                    runManualSync,
+                    configSettings,
                     hasSelectedSystem,
                     progressPercent,
                     successPercent,
