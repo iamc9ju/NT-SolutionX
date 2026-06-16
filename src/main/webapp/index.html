@@ -772,9 +772,14 @@
                                         </td>
                                         <td class="p-4 font-mono text-[11px]">{{ num.lastSync }}</td>
                                         <td class="p-4 text-center">
-                                            <button class="px-2.5 py-1 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-[11px] font-bold shadow-sm transition-all cursor-pointer" @click="inspectMasterNumberRealtime(num.phoneNumber)">
-                                                ตรวจสอบเชิงลึก
-                                            </button>
+                                            <div class="flex items-center justify-center gap-1.5">
+                                                <button class="px-2.5 py-1 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-[11px] font-bold shadow-sm transition-all cursor-pointer shrink-0" @click="inspectMasterNumberRealtime(num.phoneNumber)">
+                                                    ตรวจสอบเชิงลึก
+                                                </button>
+                                                <button class="px-2.5 py-1 rounded-lg border border-red-200 dark:border-red-900/40 bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/35 text-[11px] font-bold shadow-sm transition-all cursor-pointer shrink-0" @click="terminateMasterNumber(num.phoneNumber)">
+                                                    Terminate
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr v-if="filteredMasterNumbers.length === 0">
@@ -1732,6 +1737,40 @@
                     }
                 };
 
+                const terminateMasterNumber = async (phone, force = false) => {
+                    const confirmMsg = force 
+                        ? `คุณแน่ใจหรือไม่ว่าต้องการบังคับลบข้อมูลหมายเลข ${formatPhoneNumber(phone)} จากฐานข้อมูลท้องถิ่นทันที? (จะไม่มีการส่งคำสั่งไปยังระบบ OM)`
+                        : `คุณแน่ใจหรือไม่ว่าต้องการส่งคำสั่งยกเลิกบริการ (Terminate) หมายเลข ${formatPhoneNumber(phone)} ไปยังระบบ OM?`;
+                    
+                    if (!confirm(confirmMsg)) {
+                        return;
+                    }
+                    
+                    try {
+                        const contextPath = getContextPath();
+                        const url = `${contextPath}/api/master/terminate/${phone}${force ? '?force=true' : ''}`;
+                        const res = await fetch(url, {
+                            method: 'DELETE'
+                        });
+                        const data = await res.json();
+                        if (res.status === 200 && data.success) {
+                            alert(data.message || 'ยกเลิกบริการสำเร็จ');
+                            await fetchMasterNumbers();
+                            await fetchMasterSyncStatus();
+                        } else {
+                            const errorMsg = data.error || 'Unknown error';
+                            if (!force && confirm(`เกิดข้อผิดพลาดในการส่งคำสั่งไปยัง OM: ${errorMsg}\n\nคุณต้องการบังคับลบเบอร์นี้ออกจากฐานข้อมูลท้องถิ่นโดยตรงหรือไม่ (Force Delete Locally)?`)) {
+                                await terminateMasterNumber(phone, true);
+                            } else {
+                                alert('ไม่สามารถยกเลิกบริการได้: ' + errorMsg);
+                            }
+                        }
+                    } catch (error) {
+                        console.error("Terminate error:", error);
+                        alert('เกิดข้อผิดพลาดในการเชื่อมต่อเพื่อยกเลิกบริการ: ' + error.message);
+                    }
+                };
+
                 const formatPhoneNumber = (phone) => {
                     if (!phone) return '';
                     const clean = phone.replace(/[^0-9]/g, '');
@@ -2127,6 +2166,7 @@
                     isDetailModalOpen,
                     isDetailLoading,
                     inspectMasterNumberRealtime,
+                    terminateMasterNumber,
                     detailModalData,
                     openRowDetailModal,
                     closeDetailModal,
