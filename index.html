@@ -1490,7 +1490,7 @@
                                 const data = await res.json();
                                 item.systemsStatus = data.systems;
                                 
-                                const systemCodes = ['ocs_ocs', 'wom', 'wom_iot', 'billing', 'crm', 'brm', 'inventory'];
+                                const systemCodes = ['wom', 'wom_iot', 'billing', 'crm', 'brm', 'inventory'];
                                 const hasActive = systemCodes.some(sys => {
                                     const status = data.systems[sys];
                                     return status && status.toUpperCase() === 'ACTIVE';
@@ -1520,7 +1520,7 @@
                 const getSystemsStatusSummary = (num) => {
                     if (!num.systemsStatus) return 'กำลังตรวจสอบสถานะสดรายระบบ...';
                     const list = [];
-                    const systemCodes = ['ocs_ocs', 'wom', 'wom_iot', 'billing', 'crm', 'brm', 'inventory'];
+                    const systemCodes = ['wom', 'wom_iot', 'billing', 'crm', 'brm', 'inventory'];
                     systemCodes.forEach(key => {
                         const status = num.systemsStatus[key] || 'UNKNOWN';
                         list.push(`${getSystemDisplayName(key)}: ${status}`);

@@ -233,7 +233,7 @@ public class MasterNumberEndpoint {
         }
 
         String phone = phoneNumber.trim();
-        String[] targetSystems = {"ocs_ocs", "wom", "wom_iot", "billing", "crm", "brm", "inventory"};
+        String[] targetSystems = {"wom", "wom_iot", "billing", "crm", "brm", "inventory"};
 
         final Map<String, String> systemResults = new java.util.concurrent.ConcurrentHashMap<>();
         final Map<String, String> rawResponses = new java.util.concurrent.ConcurrentHashMap<>();
