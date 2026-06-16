@@ -86,7 +86,7 @@ public class ExternalSystemClientImpl implements ExternalSystemClient {
     public String checkPhoneNumber(String systemCode, String phoneNumber) throws Exception {
         String url = systemUrls.get(systemCode);
         if (url == null || "MOCK".equalsIgnoreCase(url)) {
-            return simulateApiCall(systemCode, phoneNumber);
+            throw new RuntimeException("System URL is not configured or configured as MOCK: " + systemCode);
         }
 
         boolean isAvailableType = "ocs_ocs".equals(systemCode) || "ocs_iot".equals(systemCode) || "wom".equals(systemCode) || "wom_iot".equals(systemCode) || "brm".equals(systemCode) || "crm".equals(systemCode) || "inventory".equals(systemCode) || "billing".equals(systemCode);
