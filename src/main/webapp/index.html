@@ -765,7 +765,34 @@
                                         </td>
                                         <td class="p-4">{{ num.source }}</td>
                                         <td class="p-4">
-                                            <span class="inline-flex items-center gap-1.5 font-bold" :class="num.status === 'ACTIVE' ? 'text-neutral-400 dark:text-neutral-550' : 'text-emerald-600 dark:text-emerald-400'">
+                                            <!-- If checking is in progress -->
+                                            <span v-if="num.realtimeStatus === 'loading'" class="inline-flex items-center gap-1.5 font-bold text-neutral-450 dark:text-neutral-500 italic">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-neutral-200 dark:bg-neutral-700 animate-pulse"></span>
+                                                Checking...
+                                            </span>
+                                            <!-- If successfully checked and all 7 systems are AVAILABLE -->
+                                            <span v-else-if="num.realtimeStatus === 'AVAILABLE'" 
+                                                title="ตรวจสอบจากทั้ง 7 ระบบแล้ว: AVAILABLE ทั้งหมด"
+                                                class="inline-flex items-center gap-1.5 font-bold text-emerald-600 dark:text-emerald-400 cursor-help">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-550"></span>
+                                                AVAILABLE
+                                            </span>
+                                            <!-- If successfully checked but not all 7 systems are AVAILABLE -->
+                                            <span v-else-if="num.realtimeStatus === 'ACTIVE'" 
+                                                :title="getSystemsStatusSummary(num)"
+                                                class="inline-flex items-center gap-1.5 font-bold text-neutral-400 dark:text-neutral-550 cursor-help">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-neutral-300 dark:bg-neutral-550"></span>
+                                                ACTIVE
+                                            </span>
+                                            <!-- If check failed -->
+                                            <span v-else-if="num.realtimeStatus === 'ERROR'" 
+                                                title="เกิดข้อผิดพลาดขณะตรวจสอบความถูกต้องสด"
+                                                class="inline-flex items-center gap-1.5 font-bold text-red-500 cursor-help">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                                ERROR
+                                            </span>
+                                            <!-- Fallback before checks launch -->
+                                            <span v-else class="inline-flex items-center gap-1.5 font-bold" :class="num.status === 'ACTIVE' ? 'text-neutral-400 dark:text-neutral-550' : 'text-emerald-600 dark:text-emerald-400'">
                                                 <span class="w-1.5 h-1.5 rounded-full" :class="num.status === 'ACTIVE' ? 'bg-neutral-300 dark:bg-neutral-550' : 'bg-emerald-550'"></span>
                                                 {{ num.status }}
                                             </span>
@@ -1451,6 +1478,46 @@
                     }
                 };
 
+                const checkRealtimeStatusForList = (items) => {
+                    items.forEach(async (item) => {
+                        item.realtimeStatus = 'loading';
+                        item.systemsStatus = null;
+                        
+                        try {
+                            const contextPath = getContextPath();
+                            const res = await fetch(`${contextPath}/api/master/inspect-realtime?phoneNumber=${item.phoneNumber}&t=${Date.now()}`);
+                            if (res.ok) {
+                                const data = await res.json();
+                                item.systemsStatus = data.systems;
+                                
+                                const systemCodes = ['ocs_ocs', 'wom', 'wom_iot', 'billing', 'crm', 'brm', 'inventory'];
+                                const allAvailable = systemCodes.every(sys => {
+                                    const status = data.systems[sys];
+                                    return status && status.toUpperCase() === 'AVAILABLE';
+                                });
+                                
+                                item.realtimeStatus = allAvailable ? 'AVAILABLE' : 'ACTIVE';
+                            } else {
+                                item.realtimeStatus = 'ERROR';
+                            }
+                        } catch (e) {
+                            console.error("Error inspecting realtime status for " + item.phoneNumber, e);
+                            item.realtimeStatus = 'ERROR';
+                        }
+                    });
+                };
+
+                const getSystemsStatusSummary = (num) => {
+                    if (!num.systemsStatus) return 'กำลังตรวจสอบสถานะสดรายระบบ...';
+                    const list = [];
+                    const systemCodes = ['ocs_ocs', 'wom', 'wom_iot', 'billing', 'crm', 'brm', 'inventory'];
+                    systemCodes.forEach(key => {
+                        const status = num.systemsStatus[key] || 'UNKNOWN';
+                        list.push(`${getSystemDisplayName(key)}: ${status}`);
+                    });
+                    return 'รายละเอียดสถานะสดแต่ละระบบ:\n' + list.join('\n');
+                };
+
                 const fetchMasterNumbers = async () => {
                     isMasterLoading.value = true;
                     try {
@@ -1460,8 +1527,15 @@
                         const res = await fetch(url);
                         if (res.status === 200) {
                             const data = await res.json();
-                            masterNumbers.value = data.data || [];
+                            const items = data.data || [];
+                            items.forEach(item => {
+                                item.realtimeStatus = 'loading';
+                                item.systemsStatus = null;
+                            });
+                            masterNumbers.value = items;
                             masterTotalRecords.value = data.total || 0;
+                            // Trigger background status verification for visible numbers
+                            checkRealtimeStatusForList(masterNumbers.value);
                         }
                     } catch (e) {
                         console.error("Failed to fetch master numbers", e);
@@ -2167,6 +2241,8 @@
                     isDetailLoading,
                     inspectMasterNumberRealtime,
                     terminateMasterNumber,
+                    checkRealtimeStatusForList,
+                    getSystemsStatusSummary,
                     detailModalData,
                     openRowDetailModal,
                     closeDetailModal,
