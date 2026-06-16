@@ -1,7 +1,8 @@
 package com.project.checker.service;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -19,7 +20,8 @@ import java.util.logging.Logger;
  *   3. Environment variables
  *   4. Hardcoded fallback defaults in each class
  */
-@ApplicationScoped
+@Singleton
+@Startup
 public class AppConfig {
 
     private static final Logger LOGGER = Logger.getLogger(AppConfig.class.getName());

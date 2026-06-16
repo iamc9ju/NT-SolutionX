@@ -479,9 +479,37 @@ public class ExternalSystemClientImpl implements ExternalSystemClient {
             throw new RuntimeException("Connection timeout to " + systemCode + " API");
         }
 
+        // Try to check database status to make simulation aligned with database registry
+        String dbStatus = null;
+        String dbUrl = System.getProperty("master.datasource.url", "jdbc:oracle:thin:@10.36.1.51:1521:OMDB");
+        String dbUser = System.getProperty("master.datasource.username", "omuser");
+        String dbPass = System.getProperty("master.datasource.password", "xjfeil92");
+        try {
+            Class.forName("oracle.jdbc.OracleDriver");
+            try (java.sql.Connection conn = java.sql.DriverManager.getConnection(dbUrl, dbUser, dbPass);
+                 java.sql.PreparedStatement stmt = conn.prepareStatement("SELECT STATUS FROM NV_NUMBER_REGISTRY WHERE MSISDN = ?")) {
+                stmt.setString(1, phoneNumber);
+                try (java.sql.ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        dbStatus = rs.getString("STATUS");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // Ignore DB query errors for simulation
+        }
+
         boolean isAvailableType = "ocs_ocs".equals(systemCode) || "ocs_iot".equals(systemCode) || "wom".equals(systemCode) || "wom_iot".equals(systemCode) || "brm".equals(systemCode) || "crm".equals(systemCode) || "inventory".equals(systemCode) || "billing".equals(systemCode);
 
-        // Simulate mock response: Even phone numbers are positive, odd are negative
+        if (dbStatus != null) {
+            if ("AVAILABLE".equalsIgnoreCase(dbStatus)) {
+                return isAvailableType ? "Available" : "Inactive";
+            } else if ("ACTIVE".equalsIgnoreCase(dbStatus)) {
+                return isAvailableType ? "Active" : "Active";
+            }
+        }
+
+        // Fallback simulation if not in DB
         try {
             long num = Long.parseLong(phoneNumber.replaceAll("[^0-9]", ""));
             if (isAvailableType) {
@@ -491,9 +519,9 @@ public class ExternalSystemClientImpl implements ExternalSystemClient {
             }
         } catch (NumberFormatException e) {
             if (isAvailableType) {
-                return Math.random() > 0.3 ? "Available" : "Active";
+                return "Available";
             } else {
-                return Math.random() > 0.3 ? "Active" : "Inactive";
+                return "Active";
             }
         }
     }
@@ -502,6 +530,15 @@ public class ExternalSystemClientImpl implements ExternalSystemClient {
     public boolean isMock(String systemCode) {
         String url = systemUrls.get(systemCode);
         return url == null || "MOCK".equalsIgnoreCase(url);
+    }
+    private java.sql.Connection createConnectionWithTimeout(String dbUrl, String dbUser, String dbPass) throws Exception {
+        Class.forName("oracle.jdbc.OracleDriver");
+        java.util.Properties props = new java.util.Properties();
+        props.setProperty("user", dbUser);
+        props.setProperty("password", dbPass);
+        props.setProperty("oracle.net.CONNECT_TIMEOUT", "3000"); // 3 seconds connect timeout
+        props.setProperty("oracle.jdbc.ReadTimeout", "3000"); // 3 seconds read timeout
+        return java.sql.DriverManager.getConnection(dbUrl, props);
     }
 
     private java.sql.Connection getDbConnection(String dbUrl, String dbUser, String dbPass) throws Exception {
@@ -548,8 +585,7 @@ public class ExternalSystemClientImpl implements ExternalSystemClient {
             synchronized (this) {
                 if (currentDbConnections.get() < maxConns) {
                     try {
-                        Class.forName("oracle.jdbc.OracleDriver");
-                        java.sql.Connection newConn = java.sql.DriverManager.getConnection(dbUrl, dbUser, dbPass);
+                        java.sql.Connection newConn = createConnectionWithTimeout(dbUrl, dbUser, dbPass);
                         currentDbConnections.incrementAndGet();
                         return newConn;
                     } catch (Exception e) {
@@ -562,8 +598,7 @@ public class ExternalSystemClientImpl implements ExternalSystemClient {
         
         conn = dbConnectionPool.poll(10, TimeUnit.SECONDS);
         if (conn == null) {
-            Class.forName("oracle.jdbc.OracleDriver");
-            return java.sql.DriverManager.getConnection(dbUrl, dbUser, dbPass);
+            return createConnectionWithTimeout(dbUrl, dbUser, dbPass);
         }
         
         try {
@@ -572,16 +607,14 @@ public class ExternalSystemClientImpl implements ExternalSystemClient {
             } else {
                 try { conn.close(); } catch (Exception e) {}
                 currentDbConnections.decrementAndGet();
-                Class.forName("oracle.jdbc.OracleDriver");
-                java.sql.Connection newConn = java.sql.DriverManager.getConnection(dbUrl, dbUser, dbPass);
+                java.sql.Connection newConn = createConnectionWithTimeout(dbUrl, dbUser, dbPass);
                 currentDbConnections.incrementAndGet();
                 return newConn;
             }
         } catch (Exception e) {
             try { conn.close(); } catch (Exception ex) {}
             currentDbConnections.decrementAndGet();
-            Class.forName("oracle.jdbc.OracleDriver");
-            java.sql.Connection newConn = java.sql.DriverManager.getConnection(dbUrl, dbUser, dbPass);
+            java.sql.Connection newConn = createConnectionWithTimeout(dbUrl, dbUser, dbPass);
             currentDbConnections.incrementAndGet();
             return newConn;
         }

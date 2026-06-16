@@ -1491,12 +1491,22 @@
                                 item.systemsStatus = data.systems;
                                 
                                 const systemCodes = ['ocs_ocs', 'wom', 'wom_iot', 'billing', 'crm', 'brm', 'inventory'];
+                                const hasActive = systemCodes.some(sys => {
+                                    const status = data.systems[sys];
+                                    return status && status.toUpperCase() === 'ACTIVE';
+                                });
                                 const allAvailable = systemCodes.every(sys => {
                                     const status = data.systems[sys];
                                     return status && status.toUpperCase() === 'AVAILABLE';
                                 });
                                 
-                                item.realtimeStatus = allAvailable ? 'AVAILABLE' : 'ACTIVE';
+                                if (allAvailable) {
+                                    item.realtimeStatus = 'AVAILABLE';
+                                } else if (hasActive) {
+                                    item.realtimeStatus = 'ACTIVE';
+                                } else {
+                                    item.realtimeStatus = item.status;
+                                }
                             } else {
                                 item.realtimeStatus = 'ERROR';
                             }
