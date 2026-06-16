@@ -112,6 +112,52 @@ public class JobEndpoint {
         }
     }
 
+    @POST
+    @Path("/single")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces("text/plain;charset=UTF-8")
+    public Response checkSingleNumber(
+            @FormParam("phoneNumber") String phoneNumber,
+            @FormParam("systems") String targetSystemsStr) {
+        try {
+            if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
+                return Response.status(Response.Status.BAD_REQUEST).entity("กรุณากรอกหมายเลขโทรศัพท์").build();
+            }
+            if (targetSystemsStr == null || targetSystemsStr.trim().isEmpty()) {
+                return Response.status(Response.Status.BAD_REQUEST).entity("กรุณาเลือกระบบสำหรับใช้ในการตรวจสอบอย่างน้อย 1 ระบบ").build();
+            }
+            String[] targetSystems = targetSystemsStr.split(",");
+
+            // Clear existing active job
+            jobManager.clearActiveJob();
+
+            // Write phone number to input file as plain text (simulate CSV/TXT upload)
+            String content = "MSISDN\n" + phoneNumber.trim() + "\n";
+            java.nio.file.Files.write(jobManager.getInputExcelFile().toPath(), content.getBytes(StandardCharsets.UTF_8));
+
+            // Initialize job metadata
+            JobMetadata metadata = new JobMetadata();
+            metadata.setJobId(UUID.randomUUID().toString());
+            metadata.setStatus("RUNNING");
+            metadata.setFileName("single_check_" + phoneNumber.trim() + ".txt");
+            metadata.setUploadedAt(LocalDateTime.now().toString());
+            metadata.setProcessedNumbers(0);
+            metadata.setSuccessCount(0);
+            metadata.setFailedCount(0);
+            jobManager.saveMetadata(metadata);
+
+            // Trigger asynchronous processing
+            checkProcessor.startProcessing(targetSystems);
+
+            return Response.status(Response.Status.ACCEPTED).entity("เริ่มตรวจสอบหมายเลขเดี่ยวสำเร็จ").build();
+
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error initiating single check", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("เกิดข้อผิดพลาดภายในระบบ: " + e.getMessage()).build();
+        }
+    }
+
     @GET
     @Path("/status")
     @Produces("application/json;charset=UTF-8")

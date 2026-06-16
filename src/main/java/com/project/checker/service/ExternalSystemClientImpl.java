@@ -36,6 +36,7 @@ public class ExternalSystemClientImpl implements ExternalSystemClient {
             new java.util.concurrent.LinkedBlockingQueue<>();
     private final java.util.concurrent.atomic.AtomicInteger currentDbConnections = 
             new java.util.concurrent.atomic.AtomicInteger(0);
+    private boolean jndiAvailable = true;
 
     @PostConstruct
     public void init() {
@@ -504,6 +505,25 @@ public class ExternalSystemClientImpl implements ExternalSystemClient {
     }
 
     private java.sql.Connection getDbConnection(String dbUrl, String dbUser, String dbPass) throws Exception {
+        if (jndiAvailable) {
+            String jndiName = System.getProperty("billing.datasource.jndi");
+            if (jndiName == null || jndiName.trim().isEmpty()) {
+                jndiName = System.getenv("BILLING_DATASOURCE_JNDI");
+            }
+            if (jndiName != null && !jndiName.trim().isEmpty()) {
+                try {
+                    javax.naming.InitialContext ctx = new javax.naming.InitialContext();
+                    javax.sql.DataSource ds = (javax.sql.DataSource) ctx.lookup(jndiName.trim());
+                    return ds.getConnection();
+                } catch (Exception e) {
+                    LOGGER.log(Level.WARNING, "Failed to lookup JNDI DataSource: " + jndiName + ", falling back to direct JDBC connection", e);
+                    jndiAvailable = false;
+                }
+            } else {
+                jndiAvailable = false;
+            }
+        }
+
         java.sql.Connection conn = dbConnectionPool.poll();
         if (conn != null) {
             try {
@@ -569,6 +589,16 @@ public class ExternalSystemClientImpl implements ExternalSystemClient {
 
     private void releaseDbConnection(java.sql.Connection conn) {
         if (conn == null) return;
+        
+        if (jndiAvailable) {
+            try {
+                conn.close();
+            } catch (Exception e) {
+                LOGGER.log(Level.WARNING, "Error closing JNDI connection", e);
+            }
+            return;
+        }
+
         try {
             int maxConns = 4;
             try {

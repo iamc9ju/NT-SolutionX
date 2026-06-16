@@ -132,7 +132,7 @@
             <div class="flex items-center gap-2.5 px-5 py-5 border-b border-neutral-100 dark:border-neutral-850">
                 <div class="w-8 h-8 shrink-0">
                     <svg viewBox="0 0 100 100" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="4" y="4" width="92" height="92" rx="24" class="fill-white dark:fill-neutral-950 stroke-neutral-200 dark:stroke-neutral-800" stroke-width="1.5" />
+                        <rect x="4" y="4" width="92" height="92" rx="24" class="fill-white dark:fill-neutral-955 stroke-neutral-200 dark:stroke-neutral-800" stroke-width="1.5" />
                         <path d="M 22 52 C 22 32, 32 22, 52 22" stroke="#10B981" stroke-width="7" stroke-linecap="round" />
                         <rect x="64" y="22" width="7" height="7" rx="1.5" fill="#10B981" />
                         <rect x="77" y="22" width="7" height="7" rx="1.5" fill="#10B981" />
@@ -286,14 +286,14 @@
             <!-- Inset Top Header Bar -->
             <header class="flex h-16 shrink-0 items-center justify-between border-b border-neutral-200/80 dark:border-neutral-800/80 px-6 sm:px-8 bg-white dark:bg-[#09090b] transition-all">
                 <div class="flex items-center gap-3">
-                    <button @click="sidebarOpen = !sidebarOpen" class="p-2 -ml-2 rounded-lg text-neutral-500 hover:text-charcoal-955 dark:text-neutral-400 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 lg:hidden" title="Toggle Sidebar">
+                    <button @click="sidebarOpen = !sidebarOpen" class="p-2 -ml-2 rounded-lg text-neutral-505 hover:text-charcoal-955 dark:text-neutral-400 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 lg:hidden" title="Toggle Sidebar">
                         <i class="fa-solid fa-bars text-sm"></i>
                     </button>
                     <div class="flex items-center gap-2">
                         <!-- Tiny logo icon visible on mobile only -->
                         <div class="w-5 h-5 lg:hidden">
                             <svg viewBox="0 0 100 100" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="4" y="4" width="92" height="92" rx="24" class="fill-white dark:fill-neutral-950 stroke-neutral-200 dark:stroke-neutral-800" stroke-width="2" />
+                                <rect x="4" y="4" width="92" height="92" rx="24" class="fill-white dark:fill-neutral-955 stroke-neutral-200 dark:stroke-neutral-800" stroke-width="2" />
                                 <path d="M 22 52 C 22 32, 32 22, 52 22" stroke="#10B981" stroke-width="8" stroke-linecap="round" />
                                 <rect x="64" y="22" width="7" height="7" rx="1.5" fill="#10B981" />
                                 <rect x="77" y="22" width="7" height="7" rx="1.5" fill="#10B981" />
@@ -304,13 +304,13 @@
                         </div>
                         <span class="text-neutral-400 dark:text-neutral-500 text-xs font-semibold hidden xs:inline">NT SolutionX</span>
                         <span class="text-neutral-300 dark:text-neutral-700 text-xs hidden xs:inline">/</span>
-                        <span class="text-charcoal-950 dark:text-white text-xs font-bold capitalize">{{ activeTab }}</span>
+                        <span class="text-charcoal-955 dark:text-white text-xs font-bold capitalize">{{ activeTab }}</span>
                     </div>
                 </div>
 
                 <div class="flex items-center gap-3">
                     <span
-                        class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-neutral-50 dark:bg-neutral-900 text-charcoal-805 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-800 shadow-sm">
+                        class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-neutral-50 dark:bg-neutral-900 text-charcoal-805 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-805 shadow-sm">
                         <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                         JBoss EAP 7.2
                     </span>
@@ -385,7 +385,7 @@
                                         <span class="text-[9px] text-neutral-400 dark:text-neutral-500 font-medium">จาก {{ activeJob.totalNumbers || 0 }} แถว</span>
                                     </div>
                                 </div>
-                                <div class="bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 w-8 h-8 rounded-lg flex items-center justify-center">
+                                <div class="bg-red-50 dark:bg-red-950/20 text-red-650 dark:text-red-400 w-8 h-8 rounded-lg flex items-center justify-center">
                                     <i class="fa-solid fa-triangle-exclamation text-sm"></i>
                                 </div>
                             </div>
@@ -404,7 +404,7 @@
                                         <span class="text-[9px] text-neutral-400 dark:text-neutral-500 font-medium">แถวข้อมูลในระบบ</span>
                                     </div>
                                 </div>
-                                <div class="bg-indigo-50 dark:bg-indigo-950/20 text-indigo-600 dark:text-indigo-400 w-8 h-8 rounded-lg flex items-center justify-center">
+                                <div class="bg-indigo-50 dark:bg-indigo-950/20 text-indigo-650 dark:text-indigo-400 w-8 h-8 rounded-lg flex items-center justify-center">
                                     <i class="fa-solid fa-list-ol text-sm"></i>
                                 </div>
                             </div>
@@ -476,7 +476,7 @@
                                                 ? 'bg-emerald-50 dark:bg-emerald-950 border-emerald-200 dark:border-emerald-900/50 text-emerald-700 dark:text-emerald-400'
                                                 : ''
                                             ]">
-                                            <i class="fa-solid fa-filter text-[10px]" :class="activeFilter === 'hasError' ? 'text-red-600 dark:text-red-400' : activeFilter !== 'all' ? 'text-emerald-600 dark:text-emerald-400' : 'text-neutral-500 dark:text-neutral-400'"></i>
+                                            <i class="fa-solid fa-filter text-[10px]" :class="activeFilter === 'hasError' ? 'text-red-650 dark:text-red-400' : activeFilter !== 'all' ? 'text-emerald-600 dark:text-emerald-400' : 'text-neutral-500 dark:text-neutral-400'"></i>
                                             <span v-if="activeFilter === 'all'">ตัวกรอง</span>
                                             <span v-else-if="activeFilter === 'allAvailable'">ทุกระบบ Available</span>
                                             <span v-else-if="activeFilter === 'hasError'">มีข้อผิดพลาด (ERROR)</span>
@@ -607,7 +607,7 @@
                                 <!-- Pagination Controls -->
                                 <div v-if="hasLoadedData && totalPages > 1"
                                     class="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-3 bg-neutral-50/50 dark:bg-neutral-900/30 border-t border-neutral-200 dark:border-neutral-800 text-[11px]">
-                                    <div class="text-neutral-500 dark:text-neutral-400 font-medium">
+                                    <div class="text-neutral-505 dark:text-neutral-400 font-medium">
                                         แสดง {{ (currentPage - 1) * pageSize + 1 }} ถึง {{ Math.min(currentPage * pageSize, filteredResults.length) }} จากทั้งหมด {{ filteredResults.length }} แถว
                                     </div>
                                     <div class="flex items-center gap-4">
@@ -745,7 +745,17 @@
                                         <th class="p-4 font-bold uppercase text-center">การจัดการ</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody v-if="isMasterLoading" class="divide-y divide-neutral-200 dark:divide-neutral-800 text-charcoal-800 dark:text-neutral-200 font-mono">
+                                    <tr v-for="i in masterPageSize" :key="'master-skel-' + i" class="animate-pulse">
+                                        <td class="p-4"><div class="h-3 bg-neutral-200 dark:bg-neutral-850 rounded w-20"></div></td>
+                                        <td class="p-4"><div class="h-4 bg-neutral-200 dark:bg-neutral-850 rounded w-16"></div></td>
+                                        <td class="p-4"><div class="h-3 bg-neutral-200 dark:bg-neutral-850 rounded w-16"></div></td>
+                                        <td class="p-4"><div class="h-3.5 bg-neutral-200 dark:bg-neutral-850 rounded w-14"></div></td>
+                                        <td class="p-4"><div class="h-3 bg-neutral-200 dark:bg-neutral-850 rounded w-24"></div></td>
+                                        <td class="p-4"><div class="h-6 bg-neutral-200 dark:bg-neutral-850 rounded w-20 mx-auto"></div></td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-else>
                                     <tr v-for="num in filteredMasterNumbers" :key="num.phoneNumber" class="border-b border-neutral-100 dark:border-neutral-850 hover:bg-neutral-50/50 dark:hover:bg-neutral-850/20 text-charcoal-900 dark:text-neutral-205 transition-all">
                                         <td class="p-4 font-mono font-bold">{{ num.phoneNumber }}</td>
                                         <td class="p-4">
@@ -755,14 +765,14 @@
                                         </td>
                                         <td class="p-4">{{ num.source }}</td>
                                         <td class="p-4">
-                                            <span class="inline-flex items-center gap-1.5 font-bold" :class="num.status === 'ACTIVE' ? 'text-neutral-400 dark:text-neutral-505' : 'text-emerald-600 dark:text-emerald-400'">
-                                                <span class="w-1.5 h-1.5 rounded-full" :class="num.status === 'ACTIVE' ? 'bg-neutral-300 dark:bg-neutral-550' : 'bg-emerald-550'"></span>
+                                            <span class="inline-flex items-center gap-1.5 font-bold" :class="num.status === 'ACTIVE' ? 'text-neutral-400 dark:text-neutral-550' : 'text-emerald-650 dark:text-emerald-400'">
+                                                <span class="w-1.5 h-1.5 rounded-full" :class="num.status === 'ACTIVE' ? 'bg-neutral-305 dark:bg-neutral-550' : 'bg-emerald-550'"></span>
                                                 {{ num.status }}
                                             </span>
                                         </td>
                                         <td class="p-4 font-mono text-[11px]">{{ num.lastSync }}</td>
                                         <td class="p-4 text-center">
-                                            <button class="px-2.5 py-1 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-[11px] font-bold shadow-sm transition-all" @click="alert('กำลังเปิดดูรายละเอียดเบอร์หลัก ' + num.phoneNumber)">
+                                            <button class="px-2.5 py-1 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-[11px] font-bold shadow-sm transition-all cursor-pointer" @click="inspectMasterNumberRealtime(num.phoneNumber)">
                                                 ตรวจสอบเชิงลึก
                                             </button>
                                         </td>
@@ -772,6 +782,40 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+
+                        <!-- Pagination Controls for Master Numbers -->
+                        <div v-if="masterTotalRecords > 0"
+                            class="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-3 bg-neutral-50/50 dark:bg-neutral-900/30 border-t border-neutral-200 dark:border-neutral-800 text-[11px]">
+                            <div class="text-neutral-505 dark:text-neutral-400 font-medium">
+                                แสดง {{ (masterCurrentPage - 1) * masterPageSize + 1 }} ถึง {{ Math.min(masterCurrentPage * masterPageSize, masterTotalRecords) }} จากทั้งหมด {{ masterTotalRecords.toLocaleString('th-TH') }} แถว
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="text-neutral-500 font-semibold">แสดงหน้าละ:</span>
+                                    <select v-model="masterPageSize" class="px-2 py-1 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-neutral-700 dark:text-neutral-355 focus:outline-none shadow-sm cursor-pointer text-[10px]">
+                                        <option :value="10">10</option>
+                                        <option :value="25">25</option>
+                                        <option :value="50">50</option>
+                                        <option :value="100">100</option>
+                                    </select>
+                                </div>
+                                <span class="text-charcoal-900 dark:text-neutral-200 font-semibold font-mono">หน้า {{ masterCurrentPage }} / {{ masterTotalPages }}</span>
+                                <div class="flex items-center gap-1">
+                                    <button @click="masterCurrentPage > 1 ? masterCurrentPage-- : null"
+                                        :disabled="masterCurrentPage === 1"
+                                        class="p-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-800 text-charcoal-800 dark:text-neutral-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm flex items-center justify-center select-none cursor-pointer"
+                                        title="ก่อนหน้า">
+                                        <i class="fa-solid fa-angle-left text-[10px] w-4 h-4 flex items-center justify-center"></i>
+                                    </button>
+                                    <button @click="masterCurrentPage < masterTotalPages ? masterCurrentPage++ : null"
+                                        :disabled="masterCurrentPage === masterTotalPages"
+                                        class="p-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-800 text-charcoal-800 dark:text-neutral-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm flex items-center justify-center select-none cursor-pointer"
+                                        title="ถัดไป">
+                                        <i class="fa-solid fa-angle-right text-[10px] w-4 h-4 flex items-center justify-center"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -783,7 +827,7 @@
                         <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-5 shadow-soft dark:shadow-none flex items-center justify-between">
                             <div>
                                 <dt class="text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-wider">เบอร์ในฐานข้อมูลหลัก</dt>
-                                <dd class="text-xl font-bold text-charcoal-900 dark:text-white mt-1 font-mono">14,520</dd>
+                                <dd class="text-xl font-bold text-charcoal-900 dark:text-white mt-1 font-mono">{{ syncStats.totalMaster ? syncStats.totalMaster.toLocaleString('th-TH') : '0' }}</dd>
                             </div>
                             <div class="bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 w-8 h-8 rounded-lg flex items-center justify-center">
                                 <i class="fa-solid fa-server text-sm"></i>
@@ -792,7 +836,7 @@
                         <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-5 shadow-soft dark:shadow-none flex items-center justify-between">
                             <div>
                                 <dt class="text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-wider">ซิงโครไนซ์สำเร็จ</dt>
-                                <dd class="text-xl font-bold text-emerald-600 dark:text-emerald-400 mt-1 font-mono">14,510</dd>
+                                <dd class="text-xl font-bold text-emerald-600 dark:text-emerald-400 mt-1 font-mono">{{ syncStats.syncedCount ? syncStats.syncedCount.toLocaleString('th-TH') : '0' }}</dd>
                             </div>
                             <div class="bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 w-8 h-8 rounded-lg flex items-center justify-center">
                                 <i class="fa-solid fa-circle-check text-sm"></i>
@@ -801,7 +845,7 @@
                         <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-5 shadow-soft dark:shadow-none flex items-center justify-between">
                             <div>
                                 <dt class="text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-wider">ข้อมูลขัดแย้ง/พบปัญหา</dt>
-                                <dd class="text-xl font-bold text-red-500 mt-1 font-mono">10</dd>
+                                <dd class="text-xl font-bold text-red-500 mt-1 font-mono">{{ syncStats.errorCount ? syncStats.errorCount.toLocaleString('th-TH') : '0' }}</dd>
                             </div>
                             <div class="bg-red-50 dark:bg-red-950/20 text-red-650 dark:text-red-400 w-8 h-8 rounded-lg flex items-center justify-center">
                                 <i class="fa-solid fa-triangle-exclamation text-sm"></i>
@@ -878,7 +922,7 @@
                         </div>
 
                         <div class="flex justify-end pt-4 border-t border-neutral-100 dark:border-neutral-800">
-                            <button @click="alert('บันทึกการตั้งค่าข้อมูลหลักเรียบร้อยแล้ว')" class="px-4 py-2 bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-950 rounded-xl font-bold shadow-sm transition-all cursor-pointer">
+                            <button @click="saveMasterConfigs" class="px-4 py-2 bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-950 rounded-xl font-bold shadow-sm transition-all cursor-pointer">
                                 บันทึกการตั้งค่า
                             </button>
                         </div>
@@ -893,7 +937,7 @@
             class="fixed inset-0 bg-black/50 dark:bg-black/70 z-50 flex items-center justify-center p-4 transition-opacity duration-300"
             @click.self="showSuccessModal = false">
             <div
-                class="bg-white dark:bg-neutral-900 rounded-2xl border border-borderLight dark:border-neutral-800 shadow-soft dark:shadow-none p-6 max-w-sm w-full flex flex-col items-center gap-4 fade-in transform scale-100 transition-all duration-300">
+                class="bg-white dark:bg-neutral-900 rounded-2xl border border-borderLight dark:border-neutral-800 shadow-soft dark:shadow-none p-6 max-w-sm w-full flex flex-col items-center gap-4 fade-in transform scale-100 transition-all duration-305">
                 <div class="flex justify-center">
                     <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-950/30">
                         <i class="fa-solid fa-check text-green-600 text-lg"></i>
@@ -902,7 +946,7 @@
 
                 <div class="text-center w-full">
                     <h3 class="text-base font-bold text-neutral-900 dark:text-white">ตรวจสอบข้อมูลเรียบร้อยแล้ว</h3>
-                    <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-2 leading-relaxed">
+                    <p class="text-xs text-neutral-550 dark:text-neutral-400 mt-2 leading-relaxed">
                         ระบบได้ส่งคำขอตรวจสอบเบอร์โทรศัพท์ทั้งหมดเรียบร้อยแล้ว คุณสามารถดาวน์โหลดไฟล์สรุปผลได้ทันที
                     </p>
                     <div class="mt-5 flex gap-2 w-full justify-center">
@@ -935,15 +979,15 @@
                         <p class="font-mono font-bold text-charcoal-900 dark:text-white mt-0.5">{{ errorModalData.phone }}</p>
                     </div>
                     <div>
-                        <p class="text-[10px] text-charcoal-500 dark:text-neutral-500 uppercase font-semibold">ระบบที่ผิดพลาด</p>
+                        <p class="text-[10px] text-charcoal-505 text-neutral-500 dark:text-neutral-500 uppercase font-semibold">ระบบที่ผิดพลาด</p>
                         <p class="font-bold text-charcoal-900 dark:text-white mt-0.5">{{ getSystemDisplayName(errorModalData.system) }}</p>
                     </div>
                     <div>
-                        <p class="text-[10px] text-charcoal-500 dark:text-neutral-500 uppercase font-semibold">วิเคราะห์สาเหตุ (ภาษาไทย)</p>
+                        <p class="text-[10px] text-charcoal-505 text-neutral-500 dark:text-neutral-500 uppercase font-semibold">วิเคราะห์สาเหตุ (ภาษาไทย)</p>
                         <p class="font-semibold text-red-650 dark:text-red-400 mt-1 leading-relaxed">{{ getThaiErrorMessage(errorModalData.message) }}</p>
                     </div>
                     <div>
-                        <p class="text-[10px] text-charcoal-500 dark:text-neutral-500 uppercase font-semibold">ข้อมูล Log ขัดข้อง (Technical Message)</p>
+                        <p class="text-[10px] text-charcoal-505 text-neutral-500 dark:text-neutral-500 uppercase font-semibold">ข้อมูล Log ขัดข้อง (Technical Message)</p>
                         <div class="mt-1.5 bg-red-50/30 dark:bg-red-950/10 border border-red-100/60 dark:border-red-900/20 rounded-lg p-3 font-mono text-[10px] text-red-750 dark:text-red-400 whitespace-pre-wrap break-all max-h-32 overflow-y-auto">
                             {{ errorModalData.message }}
                         </div>
@@ -986,106 +1030,139 @@
                 <!-- Scrollable Body Content -->
                 <div class="space-y-4 overflow-y-auto pr-1 flex-grow scrollbar-thin">
                     
-                    <!-- Overview Metrics -->
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        <div class="bg-neutral-50/50 dark:bg-neutral-800/25 border border-borderLight dark:border-neutral-800 p-3 rounded-xl">
-                            <span class="text-[9px] text-neutral-400 dark:text-neutral-500 uppercase font-bold tracking-wider block">ความยาวหมายเลข</span>
-                            <span class="text-xs font-bold text-charcoal-900 dark:text-white mt-0.5 block font-mono">{{ detailModalData.phoneNumber ? detailModalData.phoneNumber.length : 0 }} หลัก</span>
+                    <!-- Loading Skeleton State -->
+                    <div v-if="isDetailLoading" class="space-y-6">
+                        <!-- Overview Metrics Skeleton -->
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            <div v-for="i in 3" :key="'metric-skel-' + i" class="bg-neutral-50/50 dark:bg-neutral-800/25 border border-borderLight dark:border-neutral-800 p-3 rounded-xl animate-pulse">
+                                <div class="h-3 bg-neutral-200 dark:bg-neutral-850 rounded w-16 mb-2"></div>
+                                <div class="h-5 bg-neutral-250 dark:bg-neutral-800 rounded w-24"></div>
+                            </div>
                         </div>
-                        <div class="bg-neutral-50/50 dark:bg-neutral-800/25 border border-borderLight dark:border-neutral-800 p-3 rounded-xl">
-                            <span class="text-[9px] text-neutral-400 dark:text-neutral-500 uppercase font-bold tracking-wider block">ผลตรวจสำเร็จ</span>
-                            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 block font-mono">{{ getDetailSuccessCount(detailModalData) }} / {{ systemHeaders.length }} ระบบ</span>
-                        </div>
-                        <div class="bg-neutral-50/50 dark:bg-neutral-800/25 border border-borderLight dark:border-neutral-800 p-3 rounded-xl col-span-2 sm:col-span-1">
-                            <span class="text-[9px] text-neutral-400 dark:text-neutral-500 uppercase font-bold tracking-wider block">ข้อผิดพลาด</span>
-                            <span class="text-xs font-bold mt-0.5 block font-mono" :class="getDetailFailedCount(detailModalData) > 0 ? 'text-red-500' : 'text-neutral-400'">{{ getDetailFailedCount(detailModalData) }} ระบบ</span>
-                        </div>
-                    </div>
 
-                    <!-- System Analysis section -->
-                    <div>
-                        <h4 class="text-[10px] font-bold text-charcoal-500 dark:text-neutral-400 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
-                            <i class="fa-solid fa-network-wired text-neutral-400"></i>
-                            รายละเอียดการยิงเช็ครายระบบปลายทาง
-                        </h4>
-                        
-                        <div class="space-y-3">
-                            <div v-for="col in systemHeaders" :key="col" class="border border-borderLight dark:border-neutral-800 rounded-xl p-3.5 space-y-2.5 transition-colors bg-white dark:bg-neutral-900/50 hover:bg-neutral-50/30 dark:hover:bg-neutral-800/10">
-                                
-                                <!-- System Row Header -->
-                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                        <!-- System List Skeleton -->
+                        <div class="space-y-3 animate-pulse">
+                            <div class="h-3.5 bg-neutral-200 dark:bg-neutral-850 rounded w-44 mb-3.5"></div>
+                            <div v-for="i in 7" :key="'sys-skel-' + i" class="border border-borderLight dark:border-neutral-800 rounded-xl p-3.5 space-y-2.5 bg-white dark:bg-neutral-900/50">
+                                <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-2">
-                                        <span class="w-8 h-8 rounded-lg bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center text-charcoal-700 dark:text-neutral-300">
-                                            <i :class="getSystemIcon(col)"></i>
-                                        </span>
-                                        <div>
-                                            <div class="flex items-center gap-1.5 flex-wrap">
-                                                <h5 class="text-xs font-bold text-charcoal-900 dark:text-white">{{ getSystemDisplayName(col) }}</h5>
-                                                <span class="text-[8px] font-mono text-neutral-400 dark:text-neutral-500 bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.2 rounded">{{ getSystemApiUrl(col) }}</span>
-                                            </div>
-                                            <span class="text-[9px] text-neutral-400 dark:text-neutral-500 block leading-tight mt-0.5">{{ getSystemRoleDescription(col) }}</span>
+                                        <div class="w-8 h-8 rounded-lg bg-neutral-100 dark:bg-neutral-850 shrink-0"></div>
+                                        <div class="space-y-1.5">
+                                            <div class="h-3.5 bg-neutral-250 dark:bg-neutral-800 rounded w-28"></div>
+                                            <div class="h-3 bg-neutral-200 dark:bg-neutral-850 rounded w-48"></div>
                                         </div>
                                     </div>
-                                    <div class="self-start sm:self-auto shrink-0">
-                                        <span v-if="detailModalData.systems[col] === 'ERROR'" class="inline-flex items-center text-[10px] font-bold text-red-500 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 px-2 py-0.5 rounded transition-all uppercase">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-red-500 mr-1.5"></span>
-                                            ERROR
-                                        </span>
-                                        <span v-else-if="!detailModalData.systems[col] || detailModalData.systems[col] === 'WAITING'" class="inline-flex items-center text-[10px] font-bold text-neutral-400 uppercase">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-neutral-200 mr-1.5 animate-pulse"></span>
-                                            WAITING
-                                        </span>
-                                        <span v-else class="inline-flex items-center text-[10px] font-bold uppercase" :class="getStatusTextClass(col, detailModalData.systems[col])">
-                                            <span class="w-1.5 h-1.5 rounded-full mr-1.5" :class="getStatusDotClass(col, detailModalData.systems[col])"></span>
-                                            {{ detailModalData.systems[col] }}
-                                        </span>
-                                    </div>
+                                    <div class="h-5 bg-neutral-200 dark:bg-neutral-850 rounded w-16"></div>
                                 </div>
-                                
-                                <!-- System Status / API Explanation -->
-                                <div class="text-[11px] leading-relaxed border-t border-dashed border-borderLight dark:border-neutral-800/80 pt-2.5">
-                                    
-                                    <!-- Successful Status Meaning -->
-                                    <div v-if="detailModalData.systems[col] && detailModalData.systems[col] !== 'ERROR' && detailModalData.systems[col] !== 'WAITING'" class="text-charcoal-700 dark:text-neutral-300">
-                                        <div class="flex items-start gap-2 bg-neutral-50 dark:bg-neutral-800/10 border border-borderLight dark:border-neutral-850 p-2.5 rounded-lg">
-                                            <i class="fa-solid fa-circle-check text-emerald-500 text-xs mt-0.5 shrink-0"></i>
-                                            <div>
-                                                <p class="font-semibold text-charcoal-900 dark:text-neutral-200">ผลการยิงเช็ค: {{ detailModalData.systems[col] }}</p>
-                                                <p class="text-xs text-neutral-550 dark:text-neutral-400 mt-0.5">{{ getSystemStatusMeaning(col, detailModalData.systems[col]) }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Waiting Message -->
-                                    <div v-else-if="!detailModalData.systems[col] || detailModalData.systems[col] === 'WAITING'" class="text-neutral-400 dark:text-neutral-500 italic">
-                                        กำลังดำเนินการตรวจสอบข้อมูล...
-                                    </div>
-                                    
-                                    <!-- Error Box (Thai Analysis + Technical Log) -->
-                                    <div v-else-if="detailModalData.systems[col] === 'ERROR'" class="space-y-2">
-                                        <div class="bg-red-50/40 dark:bg-red-950/10 border border-red-100 dark:border-red-900/30 p-3 rounded-lg text-xs space-y-2">
-                                            <div class="flex items-start gap-2 text-red-700 dark:text-red-400">
-                                                <i class="fa-solid fa-circle-exclamation text-xs mt-0.5 shrink-0"></i>
-                                                <div>
-                                                    <p class="font-bold">วิเคราะห์สาเหตุ (ภาษาไทย):</p>
-                                                    <p class="mt-0.5 leading-relaxed font-semibold">{{ getThaiErrorMessage(detailModalData.rawResponses[col]) }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="border-t border-red-200/50 dark:border-red-900/30 pt-2">
-                                                <p class="text-[9px] font-bold text-red-655/80 dark:text-red-400/80 uppercase tracking-wide">ข้อมูลความผิดพลาดทางเทคนิค (Technical Message)</p>
-                                                <div class="mt-1 bg-red-50/50 dark:bg-red-950/20 border border-red-100/60 dark:border-red-900/20 rounded p-2 font-mono text-[9px] text-red-750 dark:text-red-400 whitespace-pre-wrap break-all max-h-24 overflow-y-auto">
-                                                    {{ detailModalData.rawResponses[col] || 'ไม่มีรายละเอียดข้อผิดพลาดเพิ่มเติม' }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                <div class="border-t border-dashed border-borderLight dark:border-neutral-800/85 pt-2.5">
+                                    <div class="h-8 bg-neutral-50 dark:bg-neutral-800/10 rounded-lg"></div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
 
+                    <!-- Actual content when not loading -->
+                    <template v-else>
+                        <!-- Overview Metrics -->
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            <div class="bg-neutral-50/50 dark:bg-neutral-800/25 border border-borderLight dark:border-neutral-800 p-3 rounded-xl">
+                                <span class="text-[9px] text-neutral-400 dark:text-neutral-500 uppercase font-bold tracking-wider block">ความยาวหมายเลข</span>
+                                <span class="text-xs font-bold text-charcoal-900 dark:text-white mt-0.5 block font-mono">{{ detailModalData.phoneNumber ? detailModalData.phoneNumber.length : 0 }} หลัก</span>
+                            </div>
+                            <div class="bg-neutral-50/50 dark:bg-neutral-800/25 border border-borderLight dark:border-neutral-800 p-3 rounded-xl">
+                                <span class="text-[9px] text-neutral-400 dark:text-neutral-500 uppercase font-bold tracking-wider block">ผลตรวจสำเร็จ</span>
+                                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 block font-mono">{{ getDetailSuccessCount(detailModalData) }} / {{ systemHeaders.length }} ระบบ</span>
+                            </div>
+                            <div class="bg-neutral-50/50 dark:bg-neutral-800/25 border border-borderLight dark:border-neutral-800 p-3 rounded-xl col-span-2 sm:col-span-1">
+                                <span class="text-[9px] text-neutral-400 dark:text-neutral-500 uppercase font-bold tracking-wider block">ข้อผิดพลาด</span>
+                                <span class="text-xs font-bold mt-0.5 block font-mono" :class="getDetailFailedCount(detailModalData) > 0 ? 'text-red-500' : 'text-neutral-400'">{{ getDetailFailedCount(detailModalData) }} ระบบ</span>
+                            </div>
+                        </div>
+
+                        <!-- System Analysis section -->
+                        <div>
+                            <h4 class="text-[10px] font-bold text-charcoal-500 dark:text-neutral-400 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                                <i class="fa-solid fa-network-wired text-neutral-400"></i>
+                                รายละเอียดการยิงเช็ครายระบบปลายทาง
+                            </h4>
+                            
+                            <div class="space-y-3">
+                                <div v-for="col in systemHeaders" :key="col" class="border border-borderLight dark:border-neutral-800 rounded-xl p-3.5 space-y-2.5 transition-colors bg-white dark:bg-neutral-900/50 hover:bg-neutral-50/30 dark:hover:bg-neutral-800/10">
+                                    
+                                    <!-- System Row Header -->
+                                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-8 h-8 rounded-lg bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center text-charcoal-700 dark:text-neutral-300">
+                                                <i :class="getSystemIcon(col)"></i>
+                                            </span>
+                                            <div>
+                                                <div class="flex items-center gap-1.5 flex-wrap">
+                                                    <h5 class="text-xs font-bold text-charcoal-900 dark:text-white">{{ getSystemDisplayName(col) }}</h5>
+                                                    <span class="text-[8px] font-mono text-neutral-400 dark:text-neutral-500 bg-neutral-100 dark:bg-neutral-850 px-1.5 py-0.2 rounded">{{ getSystemApiUrl(col) }}</span>
+                                                </div>
+                                                <span class="text-[9px] text-neutral-400 dark:text-neutral-500 block leading-tight mt-0.5">{{ getSystemRoleDescription(col) }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="self-start sm:self-auto shrink-0">
+                                            <span v-if="detailModalData.systems[col] === 'ERROR'" class="inline-flex items-center text-[10px] font-bold text-red-500 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 px-2 py-0.5 rounded transition-all uppercase">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-red-500 mr-1.5"></span>
+                                                ERROR
+                                            </span>
+                                            <span v-else-if="!detailModalData.systems[col] || detailModalData.systems[col] === 'WAITING'" class="inline-flex items-center text-[10px] font-bold text-neutral-400 uppercase">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-neutral-200 mr-1.5 animate-pulse"></span>
+                                                WAITING
+                                            </span>
+                                            <span v-else class="inline-flex items-center text-[10px] font-bold uppercase" :class="getStatusTextClass(col, detailModalData.systems[col])">
+                                                <span class="w-1.5 h-1.5 rounded-full mr-1.5" :class="getStatusDotClass(col, detailModalData.systems[col])"></span>
+                                                {{ detailModalData.systems[col] }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- System Status / API Explanation -->
+                                    <div class="text-[11px] leading-relaxed border-t border-dashed border-borderLight dark:border-neutral-800/80 pt-2.5">
+                                        
+                                        <!-- Successful Status Meaning -->
+                                        <div v-if="detailModalData.systems[col] && detailModalData.systems[col] !== 'ERROR' && detailModalData.systems[col] !== 'WAITING'" class="text-charcoal-700 dark:text-neutral-300">
+                                            <div class="flex items-start gap-2 bg-neutral-50 dark:bg-neutral-800/10 border border-borderLight dark:border-neutral-850 p-2.5 rounded-lg">
+                                                <i class="fa-solid fa-circle-check text-emerald-500 text-xs mt-0.5 shrink-0"></i>
+                                                <div>
+                                                    <p class="font-semibold text-charcoal-900 dark:text-neutral-200">ผลการยิงเช็ค: {{ detailModalData.systems[col] }}</p>
+                                                    <p class="text-xs text-neutral-550 dark:text-neutral-400 mt-0.5">{{ getSystemStatusMeaning(col, detailModalData.systems[col]) }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Waiting Message -->
+                                        <div v-else-if="!detailModalData.systems[col] || detailModalData.systems[col] === 'WAITING'" class="text-neutral-400 dark:text-neutral-505 italic">
+                                            กำลังดำเนินการตรวจสอบข้อมูล...
+                                        </div>
+                                        
+                                        <!-- Error Box (Thai Analysis + Technical Log) -->
+                                        <div v-else-if="detailModalData.systems[col] === 'ERROR'" class="space-y-2">
+                                            <div class="bg-red-50/40 dark:bg-red-950/10 border border-red-100 dark:border-red-900/30 p-3 rounded-lg text-xs space-y-2">
+                                                <div class="flex items-start gap-2 text-red-700 dark:text-red-400">
+                                                    <i class="fa-solid fa-circle-exclamation text-xs mt-0.5 shrink-0"></i>
+                                                    <div>
+                                                        <p class="font-bold">วิเคราะห์สาเหตุ (ภาษาไทย):</p>
+                                                        <p class="mt-0.5 leading-relaxed font-semibold">{{ getThaiErrorMessage(detailModalData.rawResponses[col]) }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="border-t border-red-200/50 dark:border-red-900/30 pt-2">
+                                                    <p class="text-[9px] font-bold text-red-655/80 dark:text-red-400/80 uppercase tracking-wide">ข้อมูลความผิดพลาดทางเทคนิค (Technical Message)</p>
+                                                    <div class="mt-1 bg-red-50/50 dark:bg-red-950/20 border border-red-100/60 dark:border-red-900/20 rounded p-2 font-mono text-[9px] text-red-750 dark:text-red-400 whitespace-pre-wrap break-all max-h-24 overflow-y-auto">
+                                                        {{ detailModalData.rawResponses[col] || 'ไม่มีรายละเอียดข้อผิดพลาดเพิ่มเติม' }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </template>
                 </div>
 
                 <!-- Footer -->
@@ -1099,14 +1176,14 @@
         </div>
 
         <!-- Command Dialog Modal (Cmd+K / Ctrl+K) -->
-        <div v-show="isCommandDialogOpen" class="fixed inset-0 z-50 flex items-start justify-center pt-[15vh] bg-neutral-950/45 dark:bg-black/60 backdrop-blur-xs fade-in" @click.self="closeCommandDialog">
+        <div v-show="isCommandDialogOpen" class="fixed inset-0 z-50 flex items-start justify-center pt-[15vh] bg-neutral-955/45 dark:bg-black/60 backdrop-blur-xs fade-in" @click.self="closeCommandDialog">
             <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-2xl max-w-lg w-full mx-4 overflow-hidden flex flex-col">
                 <!-- Search Box -->
                 <div class="flex items-center gap-3 px-4 py-3.5 border-b border-neutral-150 dark:border-neutral-800/80">
                     <i class="fa-solid fa-magnifying-glass text-neutral-400 dark:text-neutral-500 text-sm"></i>
                     <input type="text" id="cmd-search-input" v-model="commandSearchQuery" placeholder="Type a command or search MSISDN..."
                         class="w-full bg-transparent border-0 outline-none text-neutral-905 dark:text-white text-xs placeholder-neutral-404 dark:placeholder-neutral-500 focus:ring-0">
-                    <button @click="closeCommandDialog" class="text-[10px] font-bold text-neutral-400 dark:text-neutral-500 border border-neutral-250 dark:border-neutral-800 px-1.5 py-0.5 rounded bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-all">
+                    <button @click="closeCommandDialog" class="text-[10px] font-bold text-neutral-400 dark:text-neutral-500 border border-neutral-250 dark:border-neutral-800 px-1.5 py-0.5 rounded bg-neutral-50 dark:bg-neutral-955 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-all">
                         ESC
                     </button>
                 </div>
@@ -1216,7 +1293,7 @@
                     </div>
                 </div>
 
-                <div class="flex justify-end pt-2 border-t border-neutral-150 dark:border-neutral-800 shrink-0">
+                <div class="flex justify-end pt-2 border-t border-neutral-150 dark:border-neutral-850 shrink-0">
                     <button @click="showInfoModal = false" class="px-4 py-2 bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-950 rounded-xl text-xs font-bold shadow-sm transition-all cursor-pointer">
                         เข้าใจแล้ว
                     </button>
@@ -1261,46 +1338,48 @@
                 const systemsExpanded = ref(true);
                 const masterExpanded = ref(true);
 
-                // Master Number Management state & mock data
-                const masterNumbers = ref([
-                    { phoneNumber: '0819005522', category: 'Prepaid', source: 'Oracle DB', status: 'ACTIVE', lastSync: '2026-06-12 12:45:10' },
-                    { phoneNumber: '0819005523', category: 'Postpaid', source: 'Oracle DB', status: 'AVAILABLE', lastSync: '2026-06-12 12:45:10' },
-                    { phoneNumber: '0819005524', category: 'Prepaid', source: 'Oracle DB', status: 'ACTIVE', lastSync: '2026-06-12 12:45:10' },
-                    { phoneNumber: '0819005525', category: 'Prepaid', source: 'Oracle DB', status: 'AVAILABLE', lastSync: '2026-06-12 12:45:10' },
-                    { phoneNumber: '0819005526', category: 'Postpaid', source: 'Oracle DB', status: 'ACTIVE', lastSync: '2026-06-12 12:45:10' },
-                    { phoneNumber: '0819005527', category: 'Prepaid', source: 'Oracle DB', status: 'AVAILABLE', lastSync: '2026-06-12 12:45:10' },
-                    { phoneNumber: '0819005528', category: 'Prepaid', source: 'Oracle DB', status: 'ACTIVE', lastSync: '2026-06-12 12:45:10' }
-                ]);
+                // Master Number Management state
+                const masterNumbers = ref([]);
+                const isMasterLoading = ref(false);
                 const masterSearchQuery = ref('');
                 const masterFilterStatus = ref('all');
+                const masterCurrentPage = ref(1);
+                const masterPageSize = ref(10);
+                const masterTotalRecords = ref(0);
+                const masterTotalPages = computed(() => Math.ceil(masterTotalRecords.value / (masterPageSize.value || 10)));
 
                 const filteredMasterNumbers = computed(() => {
-                    let list = masterNumbers.value;
-                    if (masterFilterStatus.value !== 'all') {
-                        list = list.filter(num => num.status === masterFilterStatus.value);
-                    }
-                    if (masterSearchQuery.value) {
-                        const q = masterSearchQuery.value.trim().toLowerCase();
-                        list = list.filter(num => num.phoneNumber.toLowerCase().includes(q));
-                    }
-                    return list;
+                    return masterNumbers.value;
                 });
 
                 const syncStats = ref({
-                    totalMaster: 14520,
-                    syncedCount: 14510,
-                    errorCount: 10,
-                    lastSyncRun: '2026-06-12 12:45:10',
+                    totalMaster: 0,
+                    syncedCount: 0,
+                    errorCount: 0,
+                    lastSyncRun: 'ยังไม่ได้ซิงค์ข้อมูล',
                     isSyncing: false
                 });
 
-                const runManualSync = () => {
+                const runManualSync = async () => {
                     syncStats.value.isSyncing = true;
-                    setTimeout(() => {
+                    try {
+                        const res = await fetch(`${getContextPath()}/api/master/sync`, {
+                            method: 'POST'
+                        });
+                        const data = await res.json();
+                        if (res.status === 200 && data.success) {
+                            alert(data.message || 'ซิงโครไนซ์ข้อมูลระบบ Master Number กับระบบปลายทางเสร็จสมบูรณ์!');
+                        } else {
+                            alert('การซิงค์ข้อมูลล้มเหลว: ' + (data.error || 'Unknown error'));
+                        }
+                    } catch (e) {
+                        console.error("Failed manual sync", e);
+                        alert('เกิดข้อผิดพลาดในการซิงโครไนซ์: ' + e.message);
+                    } finally {
                         syncStats.value.isSyncing = false;
-                        syncStats.value.lastSyncRun = new Date().toLocaleString('th-TH');
-                        alert('ซิงโครไนซ์ข้อมูลระบบ Master Number กับระบบปลายทางเสร็จสมบูรณ์!');
-                    }, 3000);
+                        await fetchMasterSyncStatus();
+                        await fetchMasterNumbers();
+                    }
                 };
 
                 const configSettings = ref({
@@ -1308,6 +1387,105 @@
                     batchSize: 500,
                     autoRepair: true,
                     notifyEmail: 'intranet-admin@ntsolutionx.co.th'
+                });
+
+                const fetchMasterSyncStatus = async () => {
+                    try {
+                        const res = await fetch(`${getContextPath()}/api/master/sync-status?t=${Date.now()}`);
+                        if (res.status === 200) {
+                            const data = await res.json();
+                            syncStats.value.totalMaster = data.totalMaster;
+                            syncStats.value.syncedCount = data.syncedCount;
+                            syncStats.value.errorCount = data.errorCount;
+                            syncStats.value.lastSyncRun = data.lastSyncRun;
+                        }
+                    } catch (e) {
+                        console.error("Failed to fetch master sync status", e);
+                    }
+                };
+
+                const fetchMasterConfigs = async () => {
+                    try {
+                        const res = await fetch(`${getContextPath()}/api/master/config?t=${Date.now()}`);
+                        if (res.status === 200) {
+                            const data = await res.json();
+                            configSettings.value.syncInterval = data.sync_interval || 'daily';
+                            configSettings.value.batchSize = parseInt(data.batch_size_limit) || 500;
+                            configSettings.value.autoRepair = data.auto_repair_enabled === 'true';
+                            configSettings.value.notifyEmail = data.notify_email || 'intranet-admin@ntsolutionx.co.th';
+                        }
+                    } catch (e) {
+                        console.error("Failed to load configs", e);
+                    }
+                };
+
+                const saveMasterConfigs = async () => {
+                    try {
+                        const payload = {
+                            sync_interval: configSettings.value.syncInterval,
+                            batch_size_limit: String(configSettings.value.batchSize),
+                            auto_repair_enabled: String(configSettings.value.autoRepair),
+                            notify_email: configSettings.value.notifyEmail
+                        };
+                        const res = await fetch(`${getContextPath()}/api/master/config`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(payload)
+                        });
+                        const data = await res.json();
+                        if (res.status === 200 && data.success) {
+                            alert('บันทึกการตั้งค่าข้อมูลหลักเรียบร้อยแล้ว');
+                        } else {
+                            alert('ไม่สามารถบันทึกการตั้งค่าได้: ' + (data.error || 'Unknown error'));
+                        }
+                    } catch (e) {
+                        console.error("Failed to save configs", e);
+                        alert('เกิดข้อผิดพลาดในการบันทึกการตั้งค่า: ' + e.message);
+                    }
+                };
+
+                const fetchMasterNumbers = async () => {
+                    isMasterLoading.value = true;
+                    try {
+                        const searchParam = masterSearchQuery.value ? encodeURIComponent(masterSearchQuery.value.trim()) : '';
+                        const statusParam = masterFilterStatus.value || 'all';
+                        const url = `${getContextPath()}/api/master/list?page=${masterCurrentPage.value}&limit=${masterPageSize.value}&search=${searchParam}&status=${statusParam}&t=${Date.now()}`;
+                        const res = await fetch(url);
+                        if (res.status === 200) {
+                            const data = await res.json();
+                            masterNumbers.value = data.data || [];
+                            masterTotalRecords.value = data.total || 0;
+                        }
+                    } catch (e) {
+                        console.error("Failed to fetch master numbers", e);
+                    } finally {
+                        isMasterLoading.value = false;
+                    }
+                };
+
+                let masterSearchTimeout = null;
+                watch(masterSearchQuery, () => {
+                    if (masterSearchTimeout) clearTimeout(masterSearchTimeout);
+                    masterSearchTimeout = setTimeout(() => {
+                        masterCurrentPage.value = 1;
+                        fetchMasterNumbers();
+                    }, 400);
+                });
+
+                watch(masterFilterStatus, () => {
+                    masterCurrentPage.value = 1;
+                    fetchMasterNumbers();
+                });
+
+                watch(masterPageSize, () => {
+                    masterCurrentPage.value = 1;
+                    fetchMasterNumbers();
+                });
+
+                watch(masterCurrentPage, () => {
+                    fetchMasterNumbers();
                 });
                 const showInfoModal = ref(false);
                 const isCommandDialogOpen = ref(false);
@@ -1445,7 +1623,7 @@
                 });
 
                 const resultsPreview = ref([]);
-                const systemHeaders = ref([]);
+                const systemHeaders = ref(['ocs_ocs', 'wom', 'wom_iot', 'billing', 'crm', 'brm', 'inventory']);
 
                 // System Check configurations
                 const systems = ref([
@@ -1514,6 +1692,7 @@
                 // Detail Modal (MSISDN Inspector) UI states
                 const isDetailModalOpen = ref(false);
                 const detailModalData = ref(null);
+                const isDetailLoading = ref(false);
 
                 const openRowDetailModal = (row) => {
                     detailModalData.value = row;
@@ -1523,6 +1702,34 @@
                 const closeDetailModal = () => {
                     isDetailModalOpen.value = false;
                     detailModalData.value = null;
+                };
+
+                const inspectMasterNumberRealtime = async (phone) => {
+                    isDetailLoading.value = true;
+                    detailModalData.value = {
+                        phoneNumber: phone,
+                        systems: {},
+                        rawResponses: {}
+                    };
+                    isDetailModalOpen.value = true;
+                    try {
+                        const contextPath = getContextPath();
+                        const res = await fetch(`${contextPath}/api/master/inspect-realtime?phoneNumber=${phone}&t=${Date.now()}`);
+                        if (res.ok) {
+                            const data = await res.json();
+                            detailModalData.value = data;
+                        } else {
+                            const errMsg = await res.text();
+                            alert('การตรวจสอบสดล้มเหลว: ' + errMsg);
+                            isDetailModalOpen.value = false;
+                        }
+                    } catch (error) {
+                        console.error("Inspect realtime error:", error);
+                        alert('ไม่สามารถตรวจสอบได้เนื่องจากปัญหาการเชื่อมต่อ');
+                        isDetailModalOpen.value = false;
+                    } finally {
+                        isDetailLoading.value = false;
+                    }
                 };
 
                 const formatPhoneNumber = (phone) => {
@@ -1860,12 +2067,12 @@
                 };
 
                 const getStatusTextClass = (col, status) => {
-                    if (!status) return 'text-neutral-450 dark:text-neutral-500';
+                    if (!status) return 'text-neutral-450 dark:text-neutral-550';
                     const s = status.toUpperCase();
                     if (s === 'AVAILABLE') return 'text-emerald-600 dark:text-emerald-400';
-                    if (s === 'ACTIVE') return 'text-neutral-400 dark:text-neutral-500';
+                    if (s === 'ACTIVE') return 'text-neutral-400 dark:text-neutral-550';
                     if (s === 'ERROR' || s === 'FAILED') return 'text-red-500 dark:text-red-400';
-                    return 'text-neutral-450 dark:text-neutral-500';
+                    return 'text-neutral-450 dark:text-neutral-550';
                 };
 
                 const handleKeyDown = (e) => {
@@ -1887,6 +2094,9 @@
 
                 onMounted(() => {
                     fetchStatus();
+                    fetchMasterNumbers();
+                    fetchMasterSyncStatus();
+                    fetchMasterConfigs();
                     
                     // Register outside-click and keydown listeners
                     document.addEventListener('click', handleOutsideClick);
@@ -1915,6 +2125,8 @@
                     showErrorModal,
                     closeErrorModal,
                     isDetailModalOpen,
+                    isDetailLoading,
+                    inspectMasterNumberRealtime,
                     detailModalData,
                     openRowDetailModal,
                     closeDetailModal,
@@ -1942,12 +2154,21 @@
                     systems,
                     masterExpanded,
                     masterNumbers,
+                    isMasterLoading,
                     masterSearchQuery,
                     masterFilterStatus,
                     filteredMasterNumbers,
                     syncStats,
                     runManualSync,
                     configSettings,
+                    masterCurrentPage,
+                    masterPageSize,
+                    masterTotalRecords,
+                    masterTotalPages,
+                    saveMasterConfigs,
+                    fetchMasterNumbers,
+                    fetchMasterSyncStatus,
+                    fetchMasterConfigs,
                     hasSelectedSystem,
                     progressPercent,
                     successPercent,
