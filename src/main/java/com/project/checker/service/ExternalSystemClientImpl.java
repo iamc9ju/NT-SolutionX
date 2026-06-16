@@ -288,6 +288,12 @@ public class ExternalSystemClientImpl implements ExternalSystemClient {
                     java.sql.Connection conn = null;
                     try {
                         conn = getDbConnection(dbUrl, dbUser, dbPass);
+                        // Old Query (Commented out due to performance issues/timeouts):
+                        // "select distinct a.EXTERNAL_ID as BA , a.ACCOUNT_NO, e.EXTERNAL_ID as msisdn, e.SUBSCR_NO, e.ACTIVE_DATE, e.INACTIVE_DATE, e.EXTERNAL_ID_TYPE " +
+                        // "from CUSTOMER_ID_ACCT_MAP a, service s, CUSTOMER_ID_EQUIP_MAP e " +
+                        // "where a.ACCOUNT_NO = s.PARENT_ACCOUNT_NO and s.SUBSCR_NO = e.SUBSCR_NO " +
+                        // "and e.EXTERNAL_ID_TYPE = 17 and a.EXTERNAL_ID_TYPE = 1 and e.EXTERNAL_ID in (?) and e.inactive_date is null " +
+                        // "order by a.EXTERNAL_ID asc"
                         try (java.sql.PreparedStatement stmt = conn.prepareStatement(
                                  "select 1 from CUSTOMER_ID_EQUIP_MAP " +
                                  "where EXTERNAL_ID = ? and EXTERNAL_ID_TYPE = 17 and inactive_date is null and rownum = 1")) {
